@@ -79,7 +79,7 @@ class ReferenceAdmin(CompareVersionAdmin):
     model = Reference
     ordering = ("-date", "citation", "created")
     list_display = (
-        "id",
+        # "id",
         "citation",
         "protein_links",
         "title",

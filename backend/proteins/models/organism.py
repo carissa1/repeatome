@@ -7,8 +7,8 @@ from .mixins import Authorable
 
 Entrez.email = "talley_lambert@hms.harvard.edu"
 
-
-class Organism(Authorable, TimeStampedModel):
+# class Organism(Authorable, TimeStampedModel):
+class Organism(models.Model):
     """A class for the parental organism (species) from which the protein has been engineered"""
 
     # Attributes

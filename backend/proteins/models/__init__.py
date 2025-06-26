@@ -7,6 +7,8 @@ from .microscope import FilterPlacement, Microscope, OpticalConfig
 from .organism import Organism
 from .oser import OSERMeasurement
 from .protein import Protein
+from .proteinTF import ProteinTF
+from .repeat import Repeat
 from .spectrum import Camera, Filter, Light, Spectrum
 from .state import Dye, Fluorophore, State
 from .transition import StateTransition
@@ -31,4 +33,6 @@ __all__ = [
     "Spectrum",
     "State",
     "StateTransition",
+    "ProteinTF",
+    "Repeat",
 ]

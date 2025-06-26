@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+{% load static %}
+<link rel='stylesheet' href="{% static 'style.css' %}">
+<link rel='icon' href="{% static 'icon_img.png' %}">
+{% endblock extrahead %}
+
+{% block content %}
+
+
+<table class="table table-sm table-striped {{classes}}" id="{{ id|default:'repeatTable' }}" style="width:100%">
+   <thead>
+       <tr class="table-header">
+           <th class="protein">gene</th>
+           <th>satellite</th>
+           <th>validation_grade</th>
+           <th>prediction_method</th>
+           <th>microscopy_result</th>
+           <th>motif_enrichment</th>
+           <th>motif_q_score</th>
+           <th>existing_images</th>
+           <th>existing_images_link</th>
+           <th>imaging_results</th>
+           <th>notes</th>
+           <th>PDB</th>
+           <th>AF3</th>
+           <th>UNIPROT</th>
+           <th>ENSEMBL</th>
+           <th>proteinatlas</th>
+       </tr>
+   </thead>
+   <tbody>
+       {% for repeat in repeats %}
+           <tr class="data">
+               <td class="protein"><a href="/repeatTable/{{repeat.name}}">{{repeat.name}}</a></td>
+               <td class="text-center">{{repeat.aliases}}</td>
+               <td class="text-center">{{repeat.motif}}</td>
+               <td class="text-center">{{repeat.parent_organism}}</td>
+               <td class="text-center">{{repeat.references}}</td>
+           </tr>
+       {% endfor %}
+   </tbody>
+</table>
+
+
+{% endblock content %}
+
+
+{% block javascript %}
+<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+
+
+
+
+<script type="text/javascript">
+   $(function(){
+
+
+       $('.displaybuttons input').change(function(){
+           var display_type = $(this).val()
+           $("#" +  display_type + "display").show()
+           $("#" +  display_type + "display").siblings('div').hide()
+       })
+   });
+
+
+</script>
+
+
+{% endblock javascript %}

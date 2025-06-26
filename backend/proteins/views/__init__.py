@@ -7,3 +7,4 @@ from .spectra import *  # noqa
 from .microscope import *  # noqa
 from .blast import *  # noqa
 from .fret import *  # noqa
+from .repeats import *  # ADDED

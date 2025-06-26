@@ -7,7 +7,7 @@ from django.views.generic.edit import FormView
 from sentry_sdk import last_event_id
 
 from fpbase.forms import ContactForm
-from proteins.models import Protein, Spectrum
+from proteins.models import Protein, Spectrum, ProteinTF
 
 
 class HomeView(TemplateView):
@@ -32,7 +32,6 @@ class ContactView(FormView):
         # It should return an HttpResponse.
         form.send_email()
         return super().form_valid(form)
-
 
 @staff_member_required
 def test500(request):

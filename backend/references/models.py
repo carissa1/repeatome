@@ -67,7 +67,7 @@ class Reference(TimeStampedModel):
         unique=True,
         blank=False,
         verbose_name="DOI",
-        validators=[validate_doi],
+        validators=[validate_doi]
     )
     pmid = models.CharField(max_length=15, unique=True, null=True, blank=True, verbose_name="Pubmed ID")
     title = models.CharField(max_length=512, blank=True)

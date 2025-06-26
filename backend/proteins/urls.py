@@ -15,6 +15,8 @@ CONTRIBS_OPEN = not getenv("BLOCK_CONTRIBUTIONS")
 
 urlpatterns = [
     # detail view: /:slug
+    path("proteinTable/", views.ProteinTable, name="proteinTable"),
+    path("repeatTable/", views.RepeatTable, name="repeatTable"),
     re_path(r"^search/", views.protein_search, name="search"),
     re_path(r"^blast/", views.blast_view, name="blast"),
     re_path(
@@ -148,11 +150,18 @@ urlpatterns = [
         name="organism-detail",
     ),
     path("activity", views.ActivityView.as_view(), name="activity"),
+    # re_path(
+    #     r"^protein/(?P<slug>[-\w]+)/$",
+    #     views.ProteinDetailView.as_view(),
+    #     name="protein-detail",
+    # ),
     re_path(
-        r"^protein/(?P<slug>[-\w]+)/$",
-        views.ProteinDetailView.as_view(),
-        name="protein-detail",
-    ),
+       r"^proteinTable/(?P<gene>[-\w]+)/$", # gene is SlugField with name of gene
+       # {'my_id': '?P<my_id>'}
+       views.ProteinDetailView2.as_view(),
+       name="proteinTable-detail",
+   ),
+
     re_path(
         r"^protein/(?P<slug>[-\w]+)/bleach/$",
         views.protein_bleach_formsets,

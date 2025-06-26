@@ -28,6 +28,8 @@ from proteins.models import (
     Spectrum,
     State,
     StateTransition,
+    ProteinTF,
+    Repeat,
 )
 from proteins.models.lineage import MutationSetField
 from proteins.util.maintain import validate_node
@@ -171,6 +173,13 @@ class LineageInline(admin.TabularInline):
 #         qs = super().get_queryset(request)
 #         return qs.prefetch_related('revision')
 
+@admin.register(ProteinTF)
+class ProteinTF(VersionAdmin):
+    model = ProteinTF
+
+@admin.register(Repeat)
+class Repeat(VersionAdmin):
+    model = Repeat
 
 @admin.register(Light)
 class LightAdmin(SpectrumOwner, admin.ModelAdmin):
@@ -404,23 +413,23 @@ class StateTransitionInline(admin.TabularInline):
 
 @admin.register(Organism)
 class OrganismAdmin(CompareVersionAdmin):
-    list_select_related = ("created_by", "updated_by")
+    # list_select_related = ("created_by", "updated_by")
     list_display = (
         "scientific_name",
         "id",
-        "created",
-        "created_by",
-        "modified",
-        "updated_by",
+        # "created",
+        # "created_by",
+        # "modified",
+        # "updated_by",
     )
-    list_filter = ("created", "modified")
+    # list_filter = ("created", "modified")
     search_fields = (
         "scientific_name",
         "common_name",
         "id",
-        "created_by__username",
-        "created_by__first_name",
-        "created_by__last_name",
+        # "created_by__username",
+        # "created_by__first_name",
+        # "created_by__last_name",
     )
 
     fieldsets = [
@@ -438,13 +447,13 @@ class OrganismAdmin(CompareVersionAdmin):
                 )
             },
         ),
-        (
-            "Change History",
-            {
-                "classes": ("collapse",),
-                "fields": ("created", "created_by", "modified", "updated_by"),
-            },
-        ),
+        # (
+        #     "Change History",
+        #     {
+        #         "classes": ("collapse",),
+        #         "fields": ("created", "created_by", "modified", "updated_by"),
+        #     },
+        # ),
     ]
     readonly_fields = (
         "scientific_name",
@@ -453,17 +462,17 @@ class OrganismAdmin(CompareVersionAdmin):
         "rank",
         "genus",
         "species",
-        "created",
-        "created_by",
-        "modified",
-        "updated_by",
+        # "created",
+        # "created_by",
+        # "modified",
+        # "updated_by",
     )
 
-    def save_model(self, request, obj, form, change):
-        if not obj.created_by:
-            obj.created_by = request.user
-        obj.updated_by = request.user
-        obj.save()
+    # def save_model(self, request, obj, form, change):
+    #     if not obj.created_by:
+    #         obj.created_by = request.user
+    #     obj.updated_by = request.user
+    #     obj.save()
 
 
 @admin.action(description="Mark selected proteins as approved")

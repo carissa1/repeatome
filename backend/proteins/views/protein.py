@@ -52,13 +52,16 @@ from ..forms import (
     StateTransitionFormSet,
     bleach_items_formset,
 )
-from ..models import BleachMeasurement, Excerpt, Organism, Protein, Spectrum, State
+from ..models import BleachMeasurement, Excerpt, Organism, Protein, Spectrum, State, ProteinTF
 
 if TYPE_CHECKING:
     import maxminddb
 
 logger = logging.getLogger(__name__)
 
+def ProteinTable(request):          # Lists all proteins
+  items = ProteinTF.objects.all()
+  return render(request, "proteinTable.html", {"proteins": items})
 
 def check_switch_type(object, request):
     suggested = suggested_switch_type(object)
@@ -172,6 +175,40 @@ def get_country_code(request) -> str:
         return response["country"]["iso_code"]  # type: ignore
     return ""
 
+class ProteinDetailView2(DetailView):
+  """renders html for single protein page"""
+  
+  # slug_field = 'gene'
+  model = ProteinTF
+  context_object_name = 'protein'   # name for the data that will be used by template
+  queryset = ProteinTF.objects
+  template_name = 'proteins/proteinPage.html'
+ 
+  def get_object(self, query_set=None):
+     # print(self.kwargs['slug'])
+     if query_set is None:
+           query_set = self.get_queryset()
+     # print(self.kwargs['slug'])
+     # print(ProteinTF.objects.get(gene=self.kwargs['slug']))
+     obj = ProteinTF.objects.get(gene=self.kwargs['gene'])
+     # print(query_set.get(gene=self.kwargs['slug']))
+     # obj = query_set.get(gene=self.kwargs['slug'])
+     # obj = queryset.get(uuid=self.kwargs.get("slug", "").upper())
+     return obj
+
+  def get(self, request, *args, **kwargs):
+     self.object = self.get_object()
+     # print(self.object)
+     context = self.get_context_data(object=self.object)
+     # print(context['protein'].satellite)
+     return render(request, 'proteins/proteinPage.html', context)
+   
+     # context = {'protein': obj}
+     # return render(request, 'proteins/proteinPage.html', context)
+ 
+  def get_context_data(self, **kwargs):
+     data = super().get_context_data(**kwargs)
+     return data
 
 class ProteinDetailView(DetailView):
     """renders html for single protein page"""
@@ -284,7 +321,6 @@ class ProteinDetailView(DetailView):
             data["country_code"] = ""
 
         return data
-
 
 class ProteinCreateUpdateMixin:
     def get_form_type(self):

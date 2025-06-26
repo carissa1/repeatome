@@ -15,5 +15,8 @@
   ],
   "engines": {
     "node": "23.x"
+  },
+  "dependencies": {
+    "psql": "^0.0.1"
   }
 }

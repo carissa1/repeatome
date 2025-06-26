@@ -1,0 +1,15 @@
+body {
+    background-color: rgb(234, 176, 234);
+}
+
+.navbar {
+    background-color: purple;
+    display: flex;
+    flex-direction: row;
+}
+
+table, th, td {
+    border: 2px solid;
+    width: 100%;
+    border-collapse: collapse;
+}

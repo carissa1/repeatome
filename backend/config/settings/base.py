@@ -8,6 +8,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 import environ
@@ -100,6 +101,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "fpbase.middleware.CanonicalDomainMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 # MIGRATIONS CONFIGURATION
@@ -137,7 +139,7 @@ DEFAULT_FROM_EMAIL = "FPbase <info@mg.fpbase.org>"
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 # Uses django-environ to accept uri format
 # See: https://django-environ.readthedocs.io/en/latest/#supported-types
-DATABASES = {"default": env.db("DATABASE_URL", default="postgres:///fpbase")}
+DATABASES = {"default": env.db("DATABASE_URL", default="postgres://carissap39:testDB123*@127.0.0.1:5432/gripsDB")}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
@@ -211,7 +213,11 @@ STATIC_ROOT = str(ROOT_DIR / "staticfiles")
 STATIC_URL = "/static/"
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
-STATICFILES_DIRS = [str(ROOT_DIR.parent / "frontend" / "dist")]
+STATICFILES_DIRS = [
+    str(ROOT_DIR.parent / "frontend" / "dist"),
+    str(ROOT_DIR.parent / "frontend" / "static"),
+    os.path.join(os.environ['APPDATA'], 'Python', 'Python313', 'site-packages', 'django', 'contrib', 'admin', 'static'),
+]
 
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
 STATICFILES_FINDERS = [
