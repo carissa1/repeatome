@@ -388,7 +388,8 @@ hr {
 
 .small,small {
     font-size: .875em;
-    font-weight: 400
+    font-weight: 400;
+    color: black;
 }
 
 .mark,mark {
@@ -6288,7 +6289,10 @@ a.close.disabled {
 }
 
 .bg-primary {
-    background-color: #36a83b!important
+    /* background-color: #36a83b!important */
+    /* background-color: rgb(72, 40, 96); */
+    /* background-color: rgb(47, 18, 69); */
+    background-color: rgb(95, 64, 126) !important;
 }
 
 a.bg-primary:focus,a.bg-primary:hover,button.bg-primary:focus,button.bg-primary:hover {
@@ -10204,7 +10208,8 @@ pre .mismatch {
 }
 
 .cover-wrapper-inner {
-    background-image: linear-gradient(160deg,#309534,#5fcc64);
+    /* background-image: linear-gradient(160deg,#309534,#5fcc64); */
+    background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
     background-repeat: repeat-x;
     display: table-cell;
     vertical-align: middle
@@ -10212,13 +10217,16 @@ pre .mismatch {
 
 @media(max-width: 767.98px) {
     .cover-wrapper-inner {
-        background-image:linear-gradient(160deg,#30953499,#5fcc6499);
+        /* background-image:linear-gradient(160deg,#30953499,#5fcc6499); */
+        /* background-image: linear-gradient(160deg, rgb(72, 40, 96), rgb(47, 18, 69)); */
+        background-image: linear-gradient(160deg, rgb(101, 63, 130), rgb(72, 40, 96));
         background-repeat: repeat-x
     }
 }
 
 .cover-container {
-    padding: 1.5rem
+    padding: 1.5rem;
+    margin-top: 20px;
 }
 
 @media(max-width: 767.98px) {
@@ -10424,20 +10432,44 @@ pre .mismatch {
 
 @media(min-width: 768px) {
     .navbar {
-        padding:0
+        padding:0;
+        margin-top: -10px;
     }
+    .logo_pic {
+        margin-left: 0px;
+        margin-top: 40px;
+    }
+}
+
+.navbar {
+    height: 80px;
 }
 
 .navbar .navbar-brand {
     margin-top: -4px;
-    padding: 0
+    padding: 0;
+}
+
+.navbar-collapse {
+    margin-top: 5px;
 }
 
 @media(max-width: 767.98px) {
-    .navbar .navbar-brand {
+    .navbar-brand {
         float:right;
         line-height: 1.6rem;
-        padding-left: 14px
+        padding-left: 14px;
+        margin-top: -100px;
+    }
+    .navbar {
+        margin-top: 0px;
+    }
+    .navbar-toggler {
+        margin-top: -120px;
+    }
+    .logo_pic {
+        margin-left: -30px;
+        margin-top: -95px;
     }
 }
 
@@ -10605,9 +10637,15 @@ h6.dropdown-header:after {
     font-size: .9rem
 }
 
+.protein .table-header th {
+    /* float: left; */
+    text-align: left;
+}
+
 .protein .name {
-    color: #4cc551;
-    padding-bottom: 1rem;
+    color: rgb(95, 64, 126);
+    font-weight: 500;
+    /* padding-bottom: 1rem; */
     padding-top: 1.5rem;
     text-align: center;
     word-wrap: break-word
@@ -10626,7 +10664,7 @@ h6.dropdown-header:after {
 }
 
 .protein h3 {
-    color: #4cc551;
+    color: rgb(95, 64, 126);
     font-size: 1.3rem;
     font-weight: 400;
     padding-top: 1rem
@@ -10642,7 +10680,19 @@ h6.dropdown-header:after {
     font-family: Raleway,sans-serif;
     font-size: 1.4rem;
     font-weight: 600;
-    margin-top: 0;
+    margin-top: -12px;
+    padding-top: 0
+}
+
+.protein .gene_family {
+    /* color: #adb5bd; */
+    color: rgb(148, 123, 148);
+    /* color: rgb(157, 141, 171); */
+    /* color: rgb(47, 18, 69); */
+    font-family: Raleway,sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: 5px;
     padding-top: 0
 }
 

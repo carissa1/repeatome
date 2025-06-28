@@ -1,5 +1,6 @@
 body {
-    background-color: rgb(234, 176, 234);
+    background-color: rgb(47, 18, 69);
+    /* color: rgb(101, 63, 130); */
 }
 
 .navbar {
@@ -13,3 +14,9 @@ table, th, td {
     width: 100%;
     border-collapse: collapse;
 }
+
+/* COLORS */
+/* too dark: rgb(47, 18, 69) */
+/* base color (dark purple): rgb(72, 40, 96) */
+
+
