@@ -30,6 +30,7 @@ from proteins.models import (
     StateTransition,
     ProteinTF,
     Repeat,
+    GeneFamily,
 )
 from proteins.models.lineage import MutationSetField
 from proteins.util.maintain import validate_node
@@ -176,6 +177,10 @@ class LineageInline(admin.TabularInline):
 @admin.register(ProteinTF)
 class ProteinTF(VersionAdmin):
     model = ProteinTF
+
+@admin.register(GeneFamily)
+class GeneFamily(VersionAdmin):
+    model = GeneFamily
 
 @admin.register(Repeat)
 class Repeat(VersionAdmin):
