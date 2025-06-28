@@ -7,7 +7,7 @@
     <!-- Brand -->
     <a class="navbar-brand" href="{% url 'home' %}">
     {% include "_logo.html" %}
-    <span class='brand-FP'>FP</span><span class='brand-base'>base</span>
+    {% comment %} <span class='brand-FP'>FP</span><span class='brand-base'>base</span> {% endcomment %}
     </a>
     <!-- Links -->
     {% if request.user.is_authenticated %}
