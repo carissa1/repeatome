@@ -6,7 +6,7 @@ from ..util.helpers import shortuuid
 
 class Repeat(models.Model):
     id = models.CharField(primary_key=True, max_length=22, default=shortuuid, editable=False)
-    name = models.CharField(max_length=200, blank=True, null=True)
+    name = models.CharField(max_length=200, blank=True, null=True, unique=True)
     slug = models.SlugField(max_length=200, blank=True, null=True)
     aliases = ArrayField(
         models.TextField(blank=True, null=True),
