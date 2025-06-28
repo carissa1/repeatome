@@ -9,33 +9,46 @@
 
 {% block extrahead %}
 {% load static %}
-<link rel='stylesheet' href="{% static 'style.css' %}">
-{% comment %} <link rel='stylesheet' href="{% static 'style/base.css' %}"> {% endcomment %}
+{% comment %} <link rel='stylesheet' href="{% static 'style.css' %}"> {% endcomment %}
+<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
+<link rel='stylesheet' href="{% static 'style/base.css' %}">
+<link rel='stylesheet' href="{% static 'style/base_style.css' %}">
+<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
+<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
+<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
+<link rel='stylesheet' href="{% static 'style/forms.css' %}">
+<link rel='stylesheet' href="{% static 'style/login.css' %}">
+<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
+<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
+<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
 {% endblock extrahead %}
 
+{% block container-class %}container protein{% endblock %}
 
 {% block content %}
-   <h1 class="name display-4">{{ protein.gene | safe }}</h1>
-
-
+  <h1 class="text-center name display-4">{{ protein.gene | safe }}</h1>
+  <div class="text-center aliases" style="font-size: 20px;">a.k.a {{ protein.aliases_as_str | safe }}</div>
+  <div class="text-center gene_family" style="font-size: 24px;">{{protein.gene_family.gene_family | safe}}</div>
    <div class="table mt-3">
      <table class="table mobile flip-scroll">
        <thead>
          <tr class="table-header ">
-           <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#oligomerization">Oligomerization</a></th>
            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#organism">Organism</a></th>
            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#molecular-weight">Molecular Weight</a></th>
            <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#cofactor">Cofactor</a></th>
+           <th><a class="help-link" target="_blank" href="{{ HELP_URL }}glossary#oligomerization">Oligomerization</a></th>
          </tr>
        </thead>
        <tbody>
 
 
          <tr >
-           <td {% if not protein.agg %}class='text-muted'{% endif %}>{{protein.get_agg_display|default:'?'}}</td>
-           <td></td>
-           <td></td>
-           <td></td>
+           <td>{{protein.gene_family.parent_organism.scientific_name | safe}}</td>
+           <td>{{protein.molecular_weight_str | safe}}</td>
+           <td>{{protein.cofactor_as_str | safe}}</td>
+           <td>{{protein.oligomerization | safe}}</td>
          </tr>
 
 
@@ -43,8 +56,36 @@
      </table>
    </div>
 
+   <div class="attributes">
+     <h3>Repeats</h3>
+   </div>
 
-<div class="attributes">
+   <div class="table mt-3">
+     <table class="table table-striped flip-scroll states-table">
+       <thead>
+         <tr class="table-header">
+           <th>Satellite</th>
+           <th>Aliases</th>
+           <th>Motif</th>
+           <th>Proteomics</th>
+           <th>Parent Organism</th>
+         </tr>
+       </thead>
+       <tbody>
+        {% for repeat in protein.repeats.all %}
+         <tr>
+           <td>{{repeat.name | safe}}</td>
+           <td>{{ repeat.aliases | safe }}</td>
+           <td>{{ repeat.motif | safe }}</td>
+           <td>{{ repeat.proteomics | safe }}</td>
+           <td>{{ repeat.parent_organism | safe }}</td>
+         </tr>
+         {%endfor%}
+       </tbody>
+     </table>
+   </div>
+
+   <div class="attributes">
      <h3>Attributes</h3>
    </div>
 
@@ -60,13 +101,14 @@
        </thead>
        <tbody>
          <tr >
-           <td>TF</td>
+           <td>{{protein.gene_type_as_str | safe}}</td>
            <td>{{ protein.dna_binding_domain | safe }}</td>
            <td>{{ protein.signaling_pathway | safe }}</td>
          </tr>
        </tbody>
      </table>
    </div>
+
 
      {% comment %} {% if protein.protein_sequence %} {% endcomment %}
      {% comment %} <div class="float-sm-right text-info"><a href="{% url 'proteins:blast' %}?query={{protein.seq}}">BLAST</a></div>
@@ -116,7 +158,7 @@
           <p>no sequence available ... <a href="{% url 'proteins:update' slug=protein.gene %}" class='text-secondary'>add one!</a></p>
       {% endif %}
 
-			{% if protein.ENSEMBL or protein.uniprot or protein.PDB or protein.AF3 or protein.jaspar %}
+			{% if protein.ENSEMBL or protein.UNIPROT or protein.PDB or protein.AF3 or protein.jaspar %}
 			<div class="row text-right justify-content-end">
 					{% if protein.ENSEMBL %}
 					<div class="col-md-3 col-sm-6">
@@ -124,9 +166,16 @@
 					</div>
 					{% endif %}
 
+          {% if protein.ENSEMBL %}
+          <div class="col-md-3 col-sm-6">
+          <small>proteinatlas: <a href="https://www.proteinatlas.org/{{ protein.ENSEMBL }}" target="_blank" rel="noopener">{{ protein.ENSEMBL | default:''}}</a></small>
+          </div>
+          {% endif %}
+
+
 					{% if protein.UNIPROT %}
 					<div class="col-md-3 col-sm-6">
-					<small>UniProt: <a href="https://www.uniprot.org/uniprot/{{ protein.uniprot }}" target="_blank" rel="noopener">{{ protein.uniprot | default:''}}</a></small>
+					<small>UniProt: <a href="https://www.uniprot.org/uniprot/{{ protein.UNIPROT }}" target="_blank" rel="noopener">{{ protein.UNIPROT | default:''}}</a></small>
 					</div>
 					{% endif %}
 
@@ -156,7 +205,6 @@
    {% if protein.pdb %}
      {% include "proteins/_structure_section.html" with protein=protein %}
    {% endif %}
-
 
    <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>
