@@ -9,10 +9,9 @@
 
 {% block extrahead %}
 {% load static %}
-{% comment %} <link rel='stylesheet' href="{% static 'style.css' %}"> {% endcomment %}
+<link rel='stylesheet' href="{% static 'base_style.css' %}">
 <link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
 <link rel='stylesheet' href="{% static 'style/base.css' %}">
-<link rel='stylesheet' href="{% static 'style/base_style.css' %}">
 <link rel='stylesheet' href="{% static 'style/changelists.css' %}">
 <link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
 <link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
@@ -23,6 +22,16 @@
 <link rel='stylesheet' href="{% static 'style/rtl.css' %}">
 <link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
 <link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
+<link rel='stylesheet' href="{% static 'litemol/LiteMol-plugin-blue.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{% static 'base_proj.js' %}"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script type='module' src="{% static 'react_seq.js' %}"></script>
+<script src="{% static 'litemol/LiteMol-plugin.js' %}"></script>
+<script src="{% static 'litemol/LiteMol-plugin-2.js' %}"></script>
+<script type='module' src="{% static 'litemol/litemol_proj.js' %}"></script>
 {% endblock extrahead %}
 
 {% block container-class %}container protein{% endblock %}
@@ -74,11 +83,11 @@
        <tbody>
         {% for repeat in protein.repeats.all %}
          <tr>
-           <td>{{repeat.name | safe}}</td>
-           <td>{{ repeat.aliases | safe }}</td>
+           <td><a href="/repeatTable/{{repeat.name}}">>{{repeat.name | safe}}</td>
+           <td>{{ repeat.aliases_as_str | safe }}</td>
            <td>{{ repeat.motif | safe }}</td>
            <td>{{ repeat.proteomics | safe }}</td>
-           <td>{{ repeat.parent_organism | safe }}</td>
+           <td>{{ repeat.parental_organism.scientific_name | safe }}</td>
          </tr>
          {%endfor%}
        </tbody>
@@ -101,7 +110,7 @@
        </thead>
        <tbody>
          <tr >
-           <td>{{protein.gene_type_as_str | safe}}</td>
+           <td>{{ protein.gene_type_as_str | safe}}</td>
            <td>{{ protein.dna_binding_domain | safe }}</td>
            <td>{{ protein.signaling_pathway | safe }}</td>
          </tr>
@@ -202,11 +211,11 @@
 		</div>
 
 
-   {% if protein.pdb %}
+   {% if protein.PDB %}
      {% include "proteins/_structure_section.html" with protein=protein %}
    {% endif %}
 
-   <div class="excerpts">
+   {% comment %} <div class="excerpts">
      <h3>Excerpts <a tabindex="0" data-toggle="popover" data-trigger="focus" title="Excerpts" data-placement="right" data-content="Excerpts are snippets from publications that capture <strong>key</strong> information about this protein that does not easily fit into one of the existing fields (such as a summary, motivation, or observation).<hr>If you believe an excerpt is inappropriate or taken out of context, you may flag it for review if you are logged in."><i class="fas fa-info-circle ml-2 text-muted" style='font-size: 1rem; position: relative; top: -1px; cursor: pointer;'></i></a></h3>
      {% if excerpts %}
        {% for excerpt in excerpts  %}
@@ -230,15 +239,15 @@
 
      {% endif %}
      <a class='text-info' data-toggle="modal" data-target="#excerptModal"><button class='btn btn-sm btn-secondary mt-1'><i class="fas fa-quote-left mr-2"></i>Add an excerpt</button></a>
-   </div>
+   </div> {% endcomment %}
 
 
 
 
        <div class="primary-ref references mt-2">
            <h3>Primary Reference</h3>
-           {% if protein.primary_reference %}
-               {% include "_reference.html" with ref=protein.primary_reference %}
+           {% if protein.references %}
+               {% include "_reference.html" with ref=protein.references %}
            {% endif %}
        </div>
 
@@ -264,8 +273,8 @@
      <h3>External Resources</h3>
      <ul>
      {#             <li>Search <a href="https://bionumbers.hms.harvard.edu/search.aspx?task=searchbytrmorg&trm={{ protein.gene | urlencode }}" target="_blank" rel="noopener">BioNumbers</a> for {{ protein.name }}</li> #}
-       <li>Search <a href="https://www.addgene.org/search/advanced/?q={{ protein.gene | urlencode }}" target="_blank" rel="noopener">Addgene</a> for {{ protein.name | safe}}</li>
-       <li>Search <a href="https://knowledge.brc.riken.jp/resource/dna/list?query={{ protein.gene | urlencode }}" target="_blank" rel="noopener">RIKEN BRC</a> for {{ protein.name | safe}}</li>
+       <li>Search <a href="https://www.addgene.org/search/advanced/?q={{ protein.gene | urlencode }}" target="_blank" rel="noopener">Addgene</a> for {{ protein.gene | safe}}</li>
+       <li>Search <a href="https://knowledge.brc.riken.jp/resource/dna/list?query={{ protein.gene | urlencode }}" target="_blank" rel="noopener">RIKEN BRC</a> for {{ protein.gene | safe}}</li>
      </ul>
    </div>
 

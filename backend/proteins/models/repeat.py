@@ -17,7 +17,7 @@ class Repeat(models.Model):
     proteomics = models.TextField(blank=True, null=True)
     parental_organism = models.ForeignKey(
         "Organism",
-        related_name="organism",
+        # related_name="organism",
         verbose_name="Parental organism",
         on_delete=models.SET_NULL,
         blank=True,
@@ -35,6 +35,14 @@ class Repeat(models.Model):
     # ),
     references = models.TextField(blank=True, null=True)
 
+    def aliases_as_str(self):
+        if not self.aliases:
+            return ""
+        return ", ".join(self.aliases)
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
+        
+    def get_proteins(self):
+        return self.proteintf_set.all()

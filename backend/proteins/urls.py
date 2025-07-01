@@ -160,8 +160,13 @@ urlpatterns = [
        # {'my_id': '?P<my_id>'}
        views.ProteinDetailView2.as_view(),
        name="proteinTable-detail",
-   ),
-
+    ),
+    re_path(
+       r"^repeatTable/(?P<slug>[-\w]+)/$", # gene is SlugField with name of gene
+       # {'my_id': '?P<my_id>'}
+       views.RepeatDetailView.as_view(),
+       name="repeatTable-detail",
+    ),
     re_path(
         r"^protein/(?P<slug>[-\w]+)/bleach/$",
         views.protein_bleach_formsets,
