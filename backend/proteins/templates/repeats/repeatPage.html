@@ -28,6 +28,20 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
 <script type='module' src="{% static 'react_seq.js' %}"></script>
+
+<!-- Motif Sequence Viewer -->
+ <script src="{% static 'motif_viewer/hmm_logo.js' %}"></script>
+ <script src="{% static 'motif_viewer/scroller.js' %}"></script>
+ <link rel='stylesheet' href="{% static 'motif_viewer/motif_style.css' %}">
+<script type="application/javascript">
+  $(document).ready(function() {
+    var zoom         = 1;
+    var column_width = 34;
+    console.log(document.querySelector('div[data-logo]').dataset.logo)
+    $('#logo').hmm_logo({column_width: 34, height_toggle: 'enabled', column_info: '#logo_info'});
+    //$('#logo2').hmm_logo({zoom: 1, height_toggle: 'enabled', help: 1, column_info: '#logo_info'});
+  });
+</script>
 {% endblock extrahead %}
 
 {% block container-class %}container repeat{% endblock %}
@@ -59,6 +73,39 @@
         </table> {% endcomment %}
    </div>
 
+   <div class="attributes">
+     <h3>Attributes</h3>
+   </div>
+
+    <div class="table mt-3">
+        {% comment %} <table class="table table-striped flip-scroll states-table">
+        <thead>
+            <tr class="table-header">
+            <th>Gene type</th>
+            <th>DNA binding domain</th>
+            <th>Signaling pathway</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr >
+            <td>{{protein.gene_type_as_str | safe}}</td>
+            <td>{{ protein.dna_binding_domain | safe }}</td>
+            <td>{{ protein.signaling_pathway | safe }}</td>
+            </tr>
+        </tbody>
+        </table> {% endcomment %}
+        <div class="attribute-data">
+            {% if repeat.dfam_id %}
+              <p class="attr-name">Motif</p>
+              <div class='logo-holder'>
+                <div class="logo-col" id="logo" data-logo="{{repeat.get_hmm}}"></div>
+                <div class="logo-col" id="logo_info"></div>
+              </div>
+            {% endif %}
+            <p class="attr-name">Proteomics</p>
+            <p>{{repeat.proteomics}}</p>
+        </div>
+    </div>
 
    <div class="Proteins">
      <h3>Proteins</h3>
@@ -79,7 +126,7 @@
        <tbody>
         {% for protein in repeat.get_proteins %}
          <tr>
-           <td>{{ protein.gene | safe}}</td>
+           <td><a href="/proteinTable/{{protein.gene}}">{{ protein.gene | safe}}</a></td>
            <td>{{ protein.gene_family.gene_family | safe }}</td>
            <td>{{ protein.gene_type_as_str | safe }}</td>
            <td>{{ protein.parent_organism.scientific_name | safe }}</td>
@@ -90,37 +137,6 @@
        </tbody>
      </table>
    </div>
-
-   <div class="attributes">
-     <h3>Attributes</h3>
-   </div>
-
-
-    <div class="table mt-3">
-        {% comment %} <table class="table table-striped flip-scroll states-table">
-        <thead>
-            <tr class="table-header">
-            <th>Gene type</th>
-            <th>DNA binding domain</th>
-            <th>Signaling pathway</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr >
-            <td>{{protein.gene_type_as_str | safe}}</td>
-            <td>{{ protein.dna_binding_domain | safe }}</td>
-            <td>{{ protein.signaling_pathway | safe }}</td>
-            </tr>
-        </tbody>
-        </table> {% endcomment %}
-        <div class="attribute-data">
-            <p class="attr-name">Motif</p>
-            <p>{{repeat.motif}}</p>
-            <p class="attr-name">Proteomics</p>
-            <p>{{repeat.proteomics}}</p>
-        </div>  
-    </div>
-
 
      {% comment %} <div class="sequence mt-3">
 			<div class="row">

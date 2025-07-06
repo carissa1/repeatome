@@ -1,6 +1,8 @@
+from bs4 import BeautifulSoup
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
 from ..models import Repeat, ProteinTF
+import requests
 
 def RepeatTable(request):
     items = Repeat.objects.all()
@@ -35,15 +37,14 @@ class RepeatDetailView(DetailView):
         context = self.get_context_data(object=self.object)
         # protein_names = ProteinTF.objects.filter(repeats__id == context['repeat'].name)
         # print(context['protein'].satellite)
-        print(self.object.get_proteins())
+        # print(self.object.get_proteins())
+        
         return render(request, 'repeats/repeatPage.html', context)
-    
-        # context = {'protein': obj}
-        # return render(request, 'proteins/proteinPage.html', context)
     
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
         return data
     
+
     
 

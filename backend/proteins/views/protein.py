@@ -201,7 +201,7 @@ class ProteinDetailView2(DetailView):
         #  print(self.object)
         context = self.get_context_data(object=self.object)
         #  print(context['protein'].repeats.all()[0].parental_organism)
-        print(context['protein'].PDB)
+        # print(context['protein'].primary_reference)
         return render(request, 'proteins/proteinPage.html', context)
     
         # context = {'protein': obj}

@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+import requests
 
 from backend.fpseq.util import slugify
 from ..util.helpers import shortuuid
@@ -15,6 +16,7 @@ class Repeat(models.Model):
     )
     motif = models.TextField(blank=True, null=True)
     proteomics = models.TextField(blank=True, null=True)
+    dfam_id = models.CharField(max_length=100, blank=True, null=True)
     parental_organism = models.ForeignKey(
         "Organism",
         # related_name="organism",
@@ -36,8 +38,9 @@ class Repeat(models.Model):
     references = models.TextField(blank=True, null=True)
 
     def aliases_as_str(self):
-        if not self.aliases:
-            return ""
+        # print(self.aliases)
+        if not self.aliases or not self.aliases == "''":
+            return "None"
         return ", ".join(self.aliases)
 
     def save(self, *args, **kwargs):
@@ -46,3 +49,17 @@ class Repeat(models.Model):
         
     def get_proteins(self):
         return self.proteintf_set.all()
+    
+    # def get_HMM(self):
+    #     with pyhmmer.plan7.HMMFile("data/hmms/txt/PKSI-AT.hmm") as hmm_file:
+    #         hmm = hmm_file.read()
+    
+    def get_hmm(self):
+        if self.dfam_id:
+            hmm_url = f"https://dfam.org/api/families/{self.dfam_id}/hmm?format=logo"
+            r = requests.get(hmm_url)
+            if r.status_code != 200:
+                raise Exception(f"HMM not found for {self.dfam_id}")
+
+            return r.text
+        return None
