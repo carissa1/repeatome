@@ -32,6 +32,23 @@
 <script src="{% static 'litemol/LiteMol-plugin.js' %}"></script>
 <script src="{% static 'litemol/LiteMol-plugin-2.js' %}"></script>
 <script type='module' src="{% static 'litemol/litemol_proj.js' %}"></script>
+
+<!-- PDB Viewer -->
+<meta
+  name="viewport"
+  content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+/>
+
+<!-- Molstar CSS & JS -->
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.2.0/build/pdbe-molstar.css"
+/>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/pdbe-molstar@3.2.0/build/pdbe-molstar-plugin.js"
+></script>
 {% endblock extrahead %}
 
 {% block container-class %}container protein{% endblock %}
@@ -83,7 +100,7 @@
        <tbody>
         {% for repeat in protein.repeats.all %}
          <tr>
-           <td><a href="/repeatTable/{{repeat.name}}">>{{repeat.name | safe}}</td>
+           <td><a href="/repeatTable/{{repeat.name}}">{{repeat.name | safe}}</td>
            <td>{{ repeat.aliases_as_str | safe }}</td>
            <td>{{ repeat.motif | safe }}</td>
            <td>{{ repeat.proteomics | safe }}</td>
@@ -246,8 +263,8 @@
 
        <div class="primary-ref references mt-2">
            <h3>Primary Reference</h3>
-           {% if protein.references %}
-               {% include "_reference.html" with ref=protein.references %}
+           {% if protein.primary_reference %}
+               {% include "_reference.html" with ref=protein.primary_reference %}
            {% endif %}
        </div>
 
@@ -255,8 +272,8 @@
        <div class="additional-ref references">
            <h3>Additional References</h3>
            <ol>
-               {% if protein.additional_references %}
-               {% for ref in protein.additional_references %}
+               {% if protein.references %}
+               {% for ref in protein.references.all %}
                    <li class="mt-2 mb-2">{% include "_reference.html" %}</li>
                {% endfor %}
                {% else %}
