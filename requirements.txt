@@ -370,9 +370,9 @@ django-cors-headers==4.2.0 \
     --hash=sha256:9ada212b0e2efd4a5e339360ffc869cb21ac5605e810afe69f7308e577ea5bde \
     --hash=sha256:f9749c6410fe738278bc2b6ef17f05195bc7b251693c035752d8257026af024f
     # via fpbase-org
-django-crispy-forms==1.13.0 \
-    --hash=sha256:4dc9e5263c91c5f51766806a050ca2ec5c349d34c5cd91fcca3a1a0363b5e29e \
-    --hash=sha256:9c49d29dd9e98dc2e6e3a8b02670d72deb6edf7bc616986ca412d72c306b36a0
+django-crispy-forms==2.4 \
+    --hash=sha256:5a4b99876cfb1bdd3e47727731b6d4197c51c0da502befbfbec6a93010b02030 \
+    --hash=sha256:915e1ffdeb2987d78b33fabfeff8e5203c8776aa910a3a659a2c514ca125f3bd
     # via fpbase-org
 django-environ==0.10.0 \
     --hash=sha256:510f8c9c1d0a38b0815f91504270c29440a0cf44fab07f55942fa8d31bbb9be6 \
