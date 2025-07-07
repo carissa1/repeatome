@@ -366,9 +366,9 @@ django-avatar==7.1.1 \
     --hash=sha256:63746160a76c69e040ddf021d38a73389a268672e6e3cb3d1152346f2dcb0bd5 \
     --hash=sha256:a80343492fa83450d3b3e545277dcd0d527f82d8918435f1e6a1b7589acf7196
     # via fpbase-org
-django-cors-headers==4.2.0 \
-    --hash=sha256:9ada212b0e2efd4a5e339360ffc869cb21ac5605e810afe69f7308e577ea5bde \
-    --hash=sha256:f9749c6410fe738278bc2b6ef17f05195bc7b251693c035752d8257026af024f
+django-cors-headers==4.7.0 \
+    --hash=sha256:6fdf31bf9c6d6448ba09ef57157db2268d515d94fc5c89a0a1028e1fc03ee52b \
+    --hash=sha256:f1c125dcd58479fe7a67fe2499c16ee38b81b397463cf025f0e2c42937421070
     # via fpbase-org
 django-crispy-forms==1.13.0 \
     --hash=sha256:4dc9e5263c91c5f51766806a050ca2ec5c349d34c5cd91fcca3a1a0363b5e29e \
