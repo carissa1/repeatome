@@ -22,7 +22,7 @@ dependencies = [
     'django-crispy-forms==1.13.0',
     'djangorestframework==3.14.0',
     'drf-spectacular==0.26.3',
-    'djangorestframework-csv==2.1.1',
+    'djangorestframework-csv==3.0.2',
     'django-recaptcha==3.0.0',
     'sentry-sdk>=2.8',
     'biopython==1.83',
