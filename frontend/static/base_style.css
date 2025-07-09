@@ -4127,6 +4127,11 @@ input[type=button].btn-block,input[type=reset].btn-block,input[type=submit].btn-
     color: #495057
 }
 
+.nav-item::marker {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 0);
+}
+
 .nav-tabs .dropdown-menu {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
@@ -10021,14 +10026,18 @@ footer {
     box-shadow: 0 700px 0 700px rgb(131, 115, 176);
     font-size: .8rem;
     margin-top: 3.2rem;
-    padding-top: 1.8rem
+    padding-top: 1.8rem;
+    /* bottom: 0; */
+    width: 100%;
+    position: absolute;
+    height: 80px;
 }
 
 footer,footer a {
     color: white
 }
 
-footer a:link {
+footer a:link, footer a:visited {
     color: white
 }
 
@@ -10798,6 +10807,13 @@ h6.dropdown-header:after {
     }
 }
 
+.container {
+    position: relative !important;
+    /* display: flex;
+    flex-direction: column; */
+    /* min-height: 100%; */
+}
+
 .protein {
     font-size: .9rem
 }
@@ -11050,6 +11066,23 @@ h6.dropdown-header:after {
     font-weight: 500;
     margin: 0;
     word-wrap: break-word
+}
+
+#organismTable {
+    min-height: 100%;
+    position: relative;
+}
+
+#organismTable .table-header th {
+    /* float: left; */
+    text-align: left;
+    padding-left: 10px;
+}
+
+#organismTable .data td {
+    /* float: left; */
+    text-align: left;
+    padding-left: 15px;
 }
 
 .aminosequence {
