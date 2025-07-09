@@ -4,8 +4,8 @@ function checkObject(val, prop, str) {
   var propDict = {
     genbank: "GenBank",
     pdb: "PDB",
-    uuid: "FPbase ID",
-    ipg_id: "IPG ID",
+    uuid: "RepeatOme ID",
+    // ipg_id: "IPG ID",
     uniprot: "UniProt",
     aliases: "aka",
     doi: "DOI",
