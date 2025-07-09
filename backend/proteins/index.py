@@ -1,45 +1,56 @@
+import algoliasearch_django as algoliasearch
 from algoliasearch_django import AlgoliaIndex
 from algoliasearch_django.decorators import register
+from .models import Organism, ProteinTF, Repeat
 
-from .models import Organism, Protein
+# IMPORTANT: TO ADD DATA TO ALGOLIA MUST CALL 
+# python backend/manage.py algolia_reindex IN POWERSHELL
 
-
-@register(Protein)
+@register(ProteinTF)
 class ProteinIndex(AlgoliaIndex):
     fields = (
-        "name",
-        "uuid",
+        "gene",
+        "id",
         "aliases",
-        "pdb",
-        "genbank",
-        "uniprot",
-        "ipg_id",
-        "_agg",
-        "img_url",
-        "switchType",
-        "url",
-        "date_published",
-        "created",
-        "rank",
-        "ga_views",
-        "n_faves",
-        "n_cols",
-        "ex",
-        "em",
-        "pka",
-        "ec",
-        "qy",
-        "em_css",
-        "local_brightness",
-        "seq",
-        "first_author",
+        "PDB",
+        "ENSEMBL",
+        "UNIPROT",
+        "jaspar",
+        # "_agg",
+        # "img_url",
+        # "switchType",
+        # "url",
+        # "date_published",
+        # "created",
+        # "rank",
+        # "ga_views",
+        # "n_faves",
+        # "n_cols",
+        "get_repeats",
+        "protein_sequence",
+        'parent_organism',
+        'primary_reference',
+        # "parent_organism__scientific_name",
+        # "primary_reference__year",
+        # "primary_reference__author__family",
         "cofactor",
-        "color",
+        # "color",
     )
-    should_index = "is_visible"
-    tags = "tags"
-
+    # should_index = "is_visible"
+    # tags = "tags"
+    
+@register(Repeat)
+class RepeatIndex(AlgoliaIndex):
+    fields = (
+        "id",
+        "name",
+        "aliases",
+        "dfam_id",
+        "parental_organism"
+    )
+    # should_index = "is_visible"
+    # tags = "tags"
 
 @register(Organism)
 class OrganismIndex(AlgoliaIndex):
-    fields = ("scientific_name", "division", "url")
+    fields = ("scientific_name", "division", "common_name") # "url"?

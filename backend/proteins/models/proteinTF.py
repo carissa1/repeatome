@@ -1,6 +1,9 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 import requests
+
+from backend.fpseq.util import slugify
 
 from ..util.helpers import shortuuid
 from references.models import Reference
@@ -16,6 +19,7 @@ class ProteinRepeats(models.Model):
 
     class Meta:
         unique_together = ('protein', 'repeat')
+    
 
 class ProteinReferences(models.Model):
     protein = models.ForeignKey('ProteinTF', on_delete=models.CASCADE, to_field='gene', db_column='gene')
@@ -88,16 +92,6 @@ class ProteinTF(models.Model):
     )
     primary_reference = models.ForeignKey(
         Reference,
-        # related_name="references",
-        verbose_name="reference",
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True,
-        help_text="Primary reference for protein",
-        to_field='doi'
-    )
-    primary_reference = models.ForeignKey(
-        Reference,
         related_name="primary_reference",
         verbose_name="reference",
         on_delete=models.SET_NULL,
@@ -118,6 +112,13 @@ class ProteinTF(models.Model):
         null=True,
         through=ProteinRepeats
     )
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.gene)
+        super().save(*args, **kwargs)
+    
+    def get_absolute_url(self):
+        return reverse("proteins:proteinTable-detail", args=[self.gene])
     
     def gene_type_as_str(self):
         if not self.gene_type:
@@ -148,6 +149,9 @@ class ProteinTF(models.Model):
     def get_references(self):
         return self.reference_set.all()
     
+    def get_repeats(self):
+        return [p.name for p in self.repeats.all()]
+    
     def get_jaspar_ids(self, tax_group='vertebrates'):
         base_url = "https://jaspar.genereg.net/api/v1/matrix/"
         headers = {"Accept": "application/json"}
@@ -170,4 +174,5 @@ class ProteinTF(models.Model):
             jaspar_ids = []
 
         return jaspar_ids
+    
     

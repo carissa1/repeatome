@@ -10,20 +10,17 @@ class ProteinAutocomplete(autocomplete.Select2QuerySetView):
         """Return data for the 'results' key of the response."""
         return [
             {
-                "id": result.slug,
+                "id": result.id,
                 # 'slug': result.slug,
-                "text": result.name,
+                "text": result.gene,
             }
             for result in context["object_list"]
         ]
 
     def get_queryset(self):
-        if self.request.GET.get("type", "") == "spectra":
-            qs = Protein.objects.with_spectra()
-        else:
-            qs = Protein.objects.all()
+        qs = Protein.objects.all()
         if self.q:
-            qs = qs.filter(name__icontains=self.q)
+            qs = qs.filter(gene__icontains=self.q)
         return qs
 
 

@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.urls import reverse
 import requests
 
 from backend.fpseq.util import slugify
@@ -37,6 +38,9 @@ class Repeat(models.Model):
     # ),
     references = models.TextField(blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse("proteins:repeatTable-detail", args=[self.slug])
+    
     def aliases_as_str(self):
         # print(self.aliases)
         if not self.aliases or not self.aliases == "''":
