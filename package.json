@@ -20,6 +20,7 @@
     "@algolia/autocomplete-js": "^1.19.2",
     "algoliasearch": "^5.32.0",
     "autocomplete": "^0.0.1",
+    "bootstrap": "^5.3.7",
     "psql": "^0.0.1"
   }
 }
