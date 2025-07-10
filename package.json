@@ -17,6 +17,8 @@
     "node": "23.x"
   },
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.19.2",
+    "algoliasearch": "^5.32.0",
     "autocomplete": "^0.0.1",
     "psql": "^0.0.1"
   }
