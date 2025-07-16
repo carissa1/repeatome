@@ -1,72 +1,62 @@
 {% extends "base.html" %}
+{% load static i18n favit_tags %}
+
+{% block title %}Parental Organisms in the RepeatOme Database {% endblock %}
+{% block meta-description %}A list of all organisms from which proteins cataloged at repeatOme have been derived{% endblock %}
 
 {% block extrahead %}
-{% load static %}
-{% comment %} <link rel='stylesheet' href="{% static 'style.css' %}"> {% endcomment %}
-<link rel='icon' href="{% static 'icon_img.png' %}">
-
-<link rel='stylesheet' href="{% static 'style/autocomplete.css' %}">
-<link rel='stylesheet' href="{% static 'style/base.css' %}">
-<link rel='stylesheet' href="{% static 'base_style.css' %}">
-<link rel='stylesheet' href="{% static 'style/changelists.css' %}">
-<link rel='stylesheet' href="{% static 'style/dark_mode.css' %}">
-<link rel='stylesheet' href="{% static 'style/dashboard.css' %}">
-<link rel='stylesheet' href="{% static 'style/forms.css' %}">
-<link rel='stylesheet' href="{% static 'style/login.css' %}">
-<link rel='stylesheet' href="{% static 'style/nav_sidebar.css' %}">
-<link rel='stylesheet' href="{% static 'style/responsive.css' %}">
-<link rel='stylesheet' href="{% static 'style/rtl.css' %}">
-<link rel='stylesheet' href="{% static 'style/responsive_rtl.css' %}">
-<link rel='stylesheet' href="{% static 'style/unusable_password_field.css' %}">
-<link rel='stylesheet' href="{% static 'style/widgets.css' %}">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.css"/>
 {% endblock extrahead %}
 
 {% block content %}
-{% for organism in organisms %}
-    <h2>{{organism.scientific_name}}</h2>
-    <p>Common Name: {{organism.common_name}}</p>
-    <table class="table table-sm table-striped {{classes}}" id="{{ id|default:'organismTable' }}" style="width:100%; overflow-x:auto;">
+
+	<h1 class="name text-center mb-4">RepeatOme Organisms</h1>
+
+
+      <table class="table table-striped" id="org-table" style="width: 100%;">
         <thead>
-            <tr class="table-header">
-                <th>division</th>
-                <th>species</th>
-                <th>genus</th>
-                <th>rank</th>
-            </tr>
+          <tr class="table-header">
+            <th class="text-nowrap">NCBI ID</th>
+            <th>Name</th>
+            <th>Division</th>
+            <th># Proteins</th>
+            <th># Repeats</th>
+          </tr>
         </thead>
         <tbody>
-            <tr class="data">
-                {% comment %} class="text-center" {% endcomment %}
-                <td>{{organism.division}}</td>
-                <td>{{organism.species}}</td>
-                <td>{{organism.genus}}</td>
-                <td>{{organism.rank}}</td>
-            </tr>
+          {% for object in object_list  %}
+          <tr>
+          <td><a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id={{object.id}}" target="_blank" rel="noopener" class='text-info'>{{object.id}}</a></td>
+          <td><a href="{{ object.get_absolute_url }}">{{ object.scientific_name }}</a></td>
+          <td>{{ object.division }}</td>
+          <td>{{ object.num_prot }}</td>
+          <td>{{ object.num_repeat }}</td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
-{% endfor %}
+      </table>
+
+
 {% endblock content %}
 
-
 {% block javascript %}
-<script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
 
-
-
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.js"></script>
 
 <script type="text/javascript">
-   $(function(){
 
 
-       $('.displaybuttons input').change(function(){
-           var display_type = $(this).val()
-           $("#" +  display_type + "display").show()
-           $("#" +  display_type + "display").siblings('div').hide()
-       })
-   });
+///////////DATA TABLE
 
+$(function() {
+  $('#org-table').DataTable({
+    "scrollX": true,
+    "pageLength": 50,
+    "iDisplayLength": -1,
+    "lengthMenu": [ [10, 25, 50, 100, -1], [10, 25, 50, 100,"All"] ],
+    "order": [[ 3, 'desc' ]],
+  });
 
+});
 </script>
-
-
 {% endblock javascript %}

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load static i18n favit_tags %}
 
-{% block title %}Parental Organisms in the Fluorescent Protein Database {% endblock %}
-{% block meta-description %}A list of all organisms from which proteins cataloged at FPbase have been derived{% endblock %}
+{% block title %}Parental Organisms in the RepeatOme Database {% endblock %}
+{% block meta-description %}A list of all organisms from which proteins cataloged at repeatOme have been derived{% endblock %}
 
 {% block extrahead %}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.18/b-1.5.4/b-html5-1.5.4/fc-3.2.5/datatables.min.css"/>
@@ -10,7 +10,7 @@
 
 {% block content %}
 
-			<h1 class="name text-center mb-4">FPbase Organisms</h1>
+			<h1 class="name text-center mb-4">RepeatOme Organisms</h1>
 
 
       <table class="table table-striped" id="org-table" style="width: 100%;">
@@ -19,7 +19,8 @@
             <th class="text-nowrap">NCBI ID</th>
             <th>Name</th>
             <th>Division</th>
-            <th>#Proteins<span class="d-none d-md-block"> in FPbase</span></th>
+            <th># Proteins</th>
+            <th># Repeats</th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@
           <td><a href="{{ object.get_absolute_url }}">{{ object.scientific_name }}</a></td>
           <td>{{ object.division }}</td>
           <td>{{ object.num_prot }}</td>
+          <td>{{ object.num_repeat }}</td>
           </tr>
           {% endfor %}
         </tbody>

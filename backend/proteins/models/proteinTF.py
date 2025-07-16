@@ -83,7 +83,7 @@ class ProteinTF(models.Model):
         )
     parent_organism = models.ForeignKey(
         Organism,
-        related_name='parent_organism',
+        related_name='proteinTF',
         verbose_name="Parent organism",
         blank=True,
         null=True,

@@ -30,7 +30,10 @@ class Organism(models.Model):
         ordering = ["scientific_name"]
 
     def get_absolute_url(self):
-        return reverse("proteins:organism-detail", args=[self.pk])
+        return reverse("proteins:organismTable-detail", args=[self.pk])
+
+    def get_proteins(self):
+        return self.parent_organism.all()
 
     def save(self, *args, **kwargs):
         pubmed_record = Entrez.read(Entrez.esummary(db="taxonomy", id=self.id, retmode="xml"))
