@@ -26,7 +26,7 @@ class ProteinIndex(AlgoliaIndex):
         # "ga_views",
         # "n_faves",
         # "n_cols",
-        "get_repeats",
+        # "get_repeats",
         "protein_sequence",
         'parent_organism',
         'primary_reference',

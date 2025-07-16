@@ -111,7 +111,7 @@
 
 <div class='row' id='struct-micro-names'>
   <div class="col-12 col-md-6 order-md-1" style="padding:0px">
-    {%for jaspar_item in protein.get_jaspar_ids %}
+    {%for jaspar_item in protein.jaspar %}
       <div id="jasper-item" style="padding:0px; border: 1px solid #ddd;">
         <div class="form-group mb-2" style="padding:0px; margin-top:5px;">
           JASPAR ID: <a href="https://jaspar.elixir.no/matrix/{{jaspar_item}}" target="_blank" rel="noopener">{{jaspar_item}}</a>
