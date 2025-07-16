@@ -911,19 +911,6 @@ def bleach_comparison(request, pk=None):
             bcf = BleachComparisonForm()
     return render(request, template_name, {"formset": formset, "mainform": bcf})
 
-
-class OrganismListView(ListView):
-    """renders html for single reference page"""
-
-    queryset = Organism.objects.annotate(num_prot=Count("proteins"))
-
-
-class OrganismDetailView(DetailView):
-    """renders html for single reference page"""
-
-    queryset = Organism.objects.all().prefetch_related("proteins__states")
-
-
 def spectra_csv(request):
     try:
         idlist = [int(x) for x in request.GET.get("q", "").split(",") if x]

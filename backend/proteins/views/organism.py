@@ -1,12 +1,25 @@
 from django.views.generic import CreateView, DetailView, ListView, UpdateView, base
 from django.shortcuts import get_object_or_404, redirect, render
 from ..models import Organism
+from django.db.models import Count
 import requests
 
 def OrganismTable(request):
     items = Organism.objects.all()
     # print(items)
     return render(request, "organismTable.html", {"organisms": items})
+
+class OrganismListView(ListView):
+    """renders html for single reference page"""
+
+    queryset = Organism.objects.annotate(num_prot=Count("proteinTF", distinct=True), num_repeat=Count("repeat", distinct=True))
+    template_name = "organismTable.html"
+
+class OrganismDetailView(DetailView):
+    """renders html for single reference page"""
+
+    queryset = Organism.objects.all().prefetch_related("proteins__repeats")
+    template_name = "organisms/organismPage.html"
 
 # class RepeatDetailView(DetailView):
 #     """renders html for single protein page"""
