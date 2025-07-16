@@ -65,7 +65,6 @@
   }
 }
 
-
 // .algolia-autocomplete {
 //   width: 100%;
 .aa-input {
@@ -75,6 +74,25 @@
   width: 100%;
   color: #999;
 }
+
+.aa-Label {
+  margin-bottom: 0 !important;
+}
+
+.aa-Panel--scrollable {
+    margin: 0;
+    max-height: 650px;
+    // max-height: 48vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: calc((16 * 1 * 1px) / 2);
+    padding: calc(calc(16 * 1 * 1px) / 2);
+    padding: var(--aa-spacing-half);
+    scrollbar-color: rgba(255, 255, 255, 1) rgb(179, 179, 179);
+    // scrollbar-color: rgba(var(--aa-scrollbar-thumb-background-color-rgb), var(--aa-scrollbar-thumb-background-color-alpha)) rgba(var(--aa-scrollbar-track-background-color-rgb), var(--aa-scrollbar-track-background-color-alpha));
+    scrollbar-width: thin;
+}
+
 .aa-Panel {
   width: 100%;
   background-color: #fff;
@@ -83,7 +101,9 @@
   margin-top: 3px;
   max-height: 45vh;
   z-index: 100;
-  overflow-y: scroll;
+  overflow: auto !important;
+  overflow-x: hidden;
+  overflow-y: auto !important;
   scroll-behavior: smooth;
 
   .aa-empty{
@@ -108,18 +128,25 @@
 
   .aa-Source {
     max-height: none;
-    overflow: visible;
+    overflow-y: auto;
+    margin-bottom: 5px;
   }
 
   .aa-SourceHeader{
-    font-size: 20px;
+    font-size: 17px;
+    margin: 0;
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+    padding-left: 5px;
     color: rgb(72, 40, 96);
   }
 
   .aa-Item {
     cursor: pointer;
-    padding: 8px 10px 8px 34px;
+    padding: 5px 5px 5px 25px !important; /* up right down left */
     position: relative;
+    min-height: 10px;
+    font-size: 15px;
 
     .highlighted-hits {
       margin-left: 5px;

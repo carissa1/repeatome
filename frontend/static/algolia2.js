@@ -20,13 +20,17 @@ export default async function initAutocomplete() {
         placeholder: 'Search a protein or repeat',
         openOnFocus: true,
         inputElement: document.querySelector('#algolia-search-input'),
+        onSubmit({ state }) {
+            console.log("STATE: ", state)
+            window.location.href = '/search/?q=' + state
+        },
         getSources({ query }) {
             return [
             {
                 sourceId: 'proteinTF',
                 getItems() {
-                    return proteinIndex.search(query, { hitsPerPage: 5 }).then(res => {
-                        console.log('Search results:', res.hits);
+                    return proteinIndex.search(query, { hitsPerPage: 4 }).then(res => {
+                        // console.log('Search results:', res.hits);
                         return res.hits;
                     });
                 },
@@ -36,14 +40,14 @@ export default async function initAutocomplete() {
                 },
                 item({ item, html }) {
                     var str = item.gene;
-                    return html`<a href='${item.url}'><div>${str}</div></a>`;
+                    return html`<a href='/proteinTable/${item.gene}'><div>${str}</div></a>`;
                 }
                 }
             },
             {
                 sourceId: 'repeat',
                 getItems() {
-                return repeatIndex.search(query, { hitsPerPage: 5 }).then(res => res.hits);
+                return repeatIndex.search(query, { hitsPerPage: 3 }).then(res => res.hits);
                 },
                 templates: {
                 header({ html }) {5
@@ -51,14 +55,14 @@ export default async function initAutocomplete() {
                 },
                 item({ item, html }) {
                     var str = item.name;
-                    return html`<a href='${item.url}'><div>${str}</div></a>`;
+                    return html`<a href='/repeatTable/${item.name}'><div>${str}</div></a>`;
                 }
                 }
             },
             {
                 sourceId: 'reference',
                 getItems() {
-                return referenceIndex.search(query, { hitsPerPage: 5 }).then(res => res.hits);
+                return referenceIndex.search(query, { hitsPerPage: 3 }).then(res => res.hits);
                 },
                 templates: {
                 header({ html }) {
@@ -73,7 +77,7 @@ export default async function initAutocomplete() {
             {
                 sourceId: 'organism',
                 getItems() {
-                return organismIndex.search(query, { hitsPerPage: 5 }).then(res => res.hits);
+                return organismIndex.search(query, { hitsPerPage: 3 }).then(res => res.hits);
                 },
                 templates: {
                 header({ html }) {
